@@ -1,6 +1,6 @@
 // jshint esversion:6
 
-// JavaScript file for the web page "Kitchen Blue"
+// JavaScript file for the web page "Recipely"
 // Created by Harrison Kong
 // Copyright (C) Coursera 2020
 
@@ -44,10 +44,10 @@ function formatSearchResults(jsonResults) {
   var jsonObject = JSON.parse(jsonResults);
   var siteCount = 0;
 
-  // if (jsonObject.results.length == 0) { // Task 5: Part 1
-  //   setNotFoundMessages(); // Task 5: Part 1
-  // } // Task 5: Part 1
-  // else { // Task 5: Part 1
+  if (jsonObject.results.length == 0) { // Task 5: Part 1
+    setNotFoundMessages(); // Task 5: Part 1
+  } // Task 5: Part 1
+  else { // Task 5: Part 1
 
     $("#search-results-heading").text("Search Results");
     var formatedText = "";
@@ -55,17 +55,17 @@ function formatSearchResults(jsonResults) {
     jsonObject.results.forEach(
       function(item, index) {
 
-        // if (isADefunctSite(item.href)) { return; } // Task 5: Part 2
-        // siteCount++; // Task 5: Part 2
+        if (isADefunctSite(item.href)) { return; } // Task 5: Part 2
+        siteCount++; // Task 5: Part 2
 
         var thumbnail = item.thumbnail;
-        // if (thumbnail == "") { thumbnail = ""; }  // Task 5, Part 3, display images/generic_dish.jpg if thumbnail is empty
+        if (thumbnail == "") { thumbnail = "images/generic_dish.jpg"; }  // Task 5, Part 3, display images/generic_dish.jpg if thumbnail is empty
 
         const href = item.href;
 
-        formatedText += "<div class='dish-image-div'><a " + " href='" + "Task 4: What should be here??" + "' target='_blank'><img class='dish-image' width='80' src='" + thumbnail + "' alt='recipe picture, link to recipe page'></a></div>";
-        formatedText += "<div " + "class='dish-title-div'><a href='" + "Task 4: What should be here??" + "' target='_blank'>" + item.title + "</a></div>";
-        formatedText += "<div class='dish-ingredients-div'>Main ingredients: " + "Task 4: What should be here??" + "</div>";
+        formatedText += "<div class='dish-image-div'><a " + " href='" + href + "' target='_blank'><img class='dish-image' width='80' src='" + thumbnail + "' alt='recipe picture, link to recipe page'></a></div>";
+        formatedText += "<div " + "class='dish-title-div'><a href='" + href + "' target='_blank'>" + item.title + "</a></div>";
+        formatedText += "<div class='dish-ingredients-div'>Main ingredients: " + item.ingredients + "</div>";
       }
     );
 
@@ -75,7 +75,7 @@ function formatSearchResults(jsonResults) {
     // else { // Task 5: Part 2
       // setNotFoundMessages(); // Task 5: Part 2
     // } // Task 5: Part 2
-  // } // Task 5: Part 1
+  } // Task 5: Part 1
 
 }
 
@@ -106,16 +106,16 @@ function performSearch(event) {
   // Send the request
 
   request = $.ajax({
-      url: "https://cors-anywhere.herokuapp.com/" + "Task 3: Insert the resource URL between the quotes",
+      url: "https://skycors.skyroute66.com/?target=" + "http://www.recipepuppy.com/api/",
       type: "GET",
-      data: { i: $("#ingredients").val(), q: "Task 3: What should be here?? Hint: the id of the field is 'contains'. (remove the outter quotes)" }
+      data: { i: $("#ingredients").val(), q: $("#contains").val()}
   });
 
   // Callback handler for success
 
   request.done(function (response, textStatus, jqXHR){
-      // formatSearchResults(response);  // Task 4 - uncomment
-      $("#results").html("<p>" + response + "</p>");  // Task 4 - comment out
+      formatSearchResults(response);  // Task 4 - uncomment
+      // $("#results").html("<p>" + response + "</p>");  // Task 4 - comment out
   });
 
   // Callback handler for failure
@@ -150,6 +150,10 @@ function sanitizeInputs() {
   str = str.trim();
   $("#ingredients").val(str);
 
+  str = $("#contains").val();
+  str = str.replace(/[^a-zA-Z 0-9]/gim, "");
+  str = str.trim();
+  $("#contains").val(str);
   // Task 5, do the same for the field "contains"
 }
 
