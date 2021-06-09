@@ -20,3 +20,7 @@ Link: http://www.recipepuppy.com/about/api/
 
 ![web](output/SS2.png)
 ![Ingredients](output/SS1.png)
+
+## Accomplishments
+
+![certification](certificate.pdf)
