@@ -17,3 +17,6 @@ Link: http://www.recipepuppy.com/about/api/
 - Ajax
 
 ## Sample Output
+
+![web](output/SS2.png)
+![Ingredients](output/SS1.png)
